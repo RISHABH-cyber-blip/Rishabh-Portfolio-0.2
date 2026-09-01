@@ -1,14 +1,37 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Linkedin, Github, Instagram, Globe, MessageCircle } from "lucide-react";
 import { socials } from "@/lib/data";
 
 export default function Contact() {
-  const onSubmit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: wire up to Supabase / Appwrite / an email API route.
-    alert("Form submitted — connect this to your backend of choice.");
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -38,9 +61,19 @@ export default function Contact() {
             <Field id="name" label="Name" type="text" />
             <Field id="email" label="Email" type="email" />
             <Field id="message" label="Message" type="textarea" />
-            <button type="submit" className="btn btn-solid cursor-hover mt-1 w-full justify-center">
-              Send Message
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="btn btn-solid cursor-hover mt-1 w-full justify-center disabled:opacity-60"
+            >
+              {status === "sending" ? "Sending..." : "Send Message"}
             </button>
+            {status === "sent" && (
+              <p className="text-center text-sm text-accent">Message sent — I&apos;ll get back to you soon!</p>
+            )}
+            {status === "error" && (
+              <p className="text-center text-sm text-red-400">Something went wrong. Try again or email me directly.</p>
+            )}
           </form>
         </motion.div>
 
@@ -66,9 +99,9 @@ function Field({ id, label, type }: { id: string; label: string; type: "text" | 
   return (
     <div className="relative">
       {type === "textarea" ? (
-        <textarea id={id} rows={4} placeholder=" " required className={`${shared} resize-none`} />
+        <textarea id={id} name={id} rows={4} placeholder=" " required className={`${shared} resize-none`} />
       ) : (
-        <input id={id} type={type} placeholder=" " required className={shared} />
+        <input id={id} name={id} type={type} placeholder=" " required className={shared} />
       )}
       <label
         htmlFor={id}
@@ -82,7 +115,7 @@ function Field({ id, label, type }: { id: string; label: string; type: "text" | 
 
 function SocialIcon({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   return (
-    <a
+    
       href={href}
       target="_blank"
       rel="noopener noreferrer"
