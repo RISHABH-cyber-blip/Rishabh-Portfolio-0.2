@@ -44,18 +44,18 @@ export const projects: Project[] = [
   {
     slug: "project-two",
     name: "MhLegacyLaw",
-    description: "A modern legal services website with a focus on user experience and responsive design.",
+    description: "MH Legal — a lawyer-firm site with advocate profiles, animated stats, and a video-based legal-insights blog.",
     image: "/projects/placeholder-2.jpg",
-    github: "#",
-    live: "#",
+    github: "https://github.com/RISHABH-cyber-blip/govind_law",
+    live: "govind-law.vercel.app",
   },
   {
     slug: "project-three",
-    name: "[Project 3 Name]",
-    description: "[1–2 line description — what it does and what makes it visually interesting.]",
+    name: "Iphone model",
+    description: "A pixel-perfect iPhone 12 Pro landing page clone with a 3D model, scroll-animated stats, and a marquee feature ticker.",
     image: "/projects/placeholder-3.jpg",
-    github: "#",
-    live: "#",
+    github: "https://github.com/RISHABH-cyber-blip/apple-website",
+    live: "https://apple-website-ten-teal.vercel.app/",
   },
 ];
 
@@ -66,9 +66,9 @@ export type Testimonial = {
 };
 
 export const testimonials: Testimonial[] = [
-  { name: "[Client Name]", role: "[Client Role / Company]", quote: "[A short, specific quote about the results you delivered.]" },
-  { name: "[Client Name]", role: "[Client Role / Company]", quote: "[A short, specific quote about the results you delivered.]" },
-  { name: "[Client Name]", role: "[Client Role / Company]", quote: "[A short, specific quote about the results you delivered.]" },
+  { name: "Govind", role: "Lawyer", quote: "Rishabh transformed our legal website into a modern, responsive platform that has significantly improved our online presence." },
+  { name: "Shiva", role: "Client", quote: "Rishabh's attention to detail and technical expertise helped us to think about a website that truly represents our brand." },
+  { name: "Rishikesh", role: "Client", quote: "Rishabh delivered a stunning website that exceeded our expectations and has been a great asset to our business." },
 ];
 
 export type ExperienceItem = {
@@ -83,14 +83,26 @@ export const experience: ExperienceItem[] = [
     role: "Freelance Web Developer",
     org: "Self-Employed",
     dates: "2023 — Present",
-    description: "[Short description of freelance work — clients, focus areas, notable outcomes.]",
+    description: "Freelance web developer building production-grade, full-stack sites for real clients — from a law firm's marketing site (MH Legal) to a full e-commerce platform with real auth and payments (Aurele) — plus pixel-perfect clone work (Apple iPhone 12 Pro) showcasing animation and 3D polish.",
   },
   {
-    role: "[Role Title]",
-    org: "[Company / Client]",
-    dates: "[Dates]",
-    description: "[Short description of responsibilities and impact.]",
+    role: "Data Science Intern",
+    org: "Thiranex",
+    dates: "2 months",
+    description: "Completed a two-month data science internship at Thiranex, working on real-world data workflows and analysis tasks.",
   },
+  {
+    role: "web developer",
+    org: "College Major Project",
+    dates: "6 months",
+    description: "A system for remotely tracking patient vitals and health data, built as a major college project — [add: what stack, what it actually monitored, any standout feature like real-time alerts or a dashboard].",
+  },
+  {
+    role: "learner",
+    org: "Aws cloud computing",
+    dates: "3 months",
+    description: "Completed a three-month learning journey in AWS cloud computing, focusing on core services and deployment strategies.",
+  }
 ];
 
 export type BlogPost = {
