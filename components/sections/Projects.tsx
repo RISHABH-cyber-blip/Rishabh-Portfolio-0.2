@@ -2,12 +2,13 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
-import { Github, ArrowUpRight, Play } from "lucide-react";
+import { Github, ArrowUpRight, Play, X } from "lucide-react";
 import { projects, type Project } from "@/lib/data";
 
 function ProjectCard({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   const onTilt = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -27,15 +28,40 @@ function ProjectCard({ project }: { project: Project }) {
         ref={ref}
         onMouseMove={onTilt}
         onMouseLeave={reset}
-        className="glass flex h-full flex-col gap-5 p-3.5 transition-transform duration-150 ease-out [transform-style:preserve-3d]"
+        className="glass flex h-full min-h-[560px] flex-col gap-5 p-3.5 transition-transform duration-150 ease-out [transform-style:preserve-3d]"
       >
         <div
-          className="group relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-accent/15 to-primary/15 cursor-hover"
+          className="group relative aspect-[16/11] overflow-hidden rounded-[22px] border border-transparent bg-gradient-to-br from-accent/15 to-primary/15 transition-all duration-300 hover:border-white/15 hover:shadow-[0_20px_40px_rgba(0,0,0,0.22)]"
+          onMouseEnter={() => project.video && setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
           onClick={() => project.video && setPlaying(true)}
         >
-          {/* Swap for a real <Image src={project.image} .../> once you have thumbnails */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:bg-black/40 group-hover:opacity-100">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-white/10 transition-transform duration-300 group-hover:scale-110">
+          {project.video ? (
+            <video
+              src={project.video}
+              muted
+              loop
+              playsInline
+              autoPlay={hovering}
+              className="h-full w-full object-cover transition-all duration-300 ease-out"
+              style={{ transform: "none" }}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-black/10">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-white/10">
+                <Play size={22} fill="white" className="text-white" />
+              </div>
+            </div>
+          )}
+
+          <div className="pointer-events-none absolute inset-0 bg-black/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+          <div className="absolute left-4 top-4 z-10 rounded-full border border-white/20 bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">
+            Preview
+          </div>
+
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:bg-black/30 group-hover:opacity-100">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-white/10 shadow-lg shadow-black/20">
               <Play size={22} fill="white" className="text-white" />
             </div>
           </div>
@@ -67,10 +93,23 @@ function ProjectCard({ project }: { project: Project }) {
 
       {playing && (
         <div
-          className="fixed inset-0 z-[600] flex items-center justify-center bg-black/80 p-6"
+          className="fixed inset-0 z-[600] flex items-center justify-center bg-[#05070a]/80 p-4 backdrop-blur-xl transition-all duration-300"
           onClick={() => setPlaying(false)}
         >
-          <video src={project.video} controls autoPlay className="max-h-[80vh] max-w-3xl rounded-xl" />
+          <div
+            className="relative w-full max-w-5xl overflow-hidden rounded-[26px] border border-white/10 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.7)] transition-all duration-300 animate-[fadeIn_0.24s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              aria-label="Close video"
+              onClick={() => setPlaying(false)}
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60"
+            >
+              <X size={18} />
+            </button>
+            <video src={project.video} controls autoPlay playsInline className="block aspect-video w-full object-cover" />
+          </div>
         </div>
       )}
     </div>
@@ -92,7 +131,7 @@ export default function Projects() {
           <h2 className="font-display mt-4 text-4xl font-extrabold md:text-5xl">Projects</h2>
         </motion.div>
 
-        <div className="grid gap-7 md:grid-cols-3">
+        <div className="grid gap-7 md:grid-cols-3 xl:gap-8">
           {projects.map((p, i) => (
             <motion.div
               key={p.slug}
