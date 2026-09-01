@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { skills, socials } from "@/lib/data";
-import GithubHeatmap from "@/components/GithubHeatmap";
+import GithubContributions from "@/components/GithubContributions";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -86,7 +86,7 @@ export default function About() {
               variants={fadeUp}
               className="mt-7"
             >
-              <GithubHeatmap username={socials.githubUsername} />
+              <GithubContributions username={socials.githubUsername} />
             </motion.div>
           </div>
         </div>
