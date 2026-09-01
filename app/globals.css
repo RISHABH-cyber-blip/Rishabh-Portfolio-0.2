@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html {
   scroll-behavior: smooth;
@@ -8,6 +10,7 @@ body {
   background: #0b0b0f;
   color: #eaf0f2;
   cursor: none;
+  font-family: "Segoe UI", sans-serif;
 }
 
 @media (hover: none) {
