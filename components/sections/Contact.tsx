@@ -14,9 +14,9 @@ export default function Contact() {
 
     const form = e.currentTarget;
     const data = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+      name: (form.elements.namedItem("name") as HTMLInputElement).value.trim(),
+      email: (form.elements.namedItem("email") as HTMLInputElement).value.trim(),
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value.trim(),
     };
 
     try {
@@ -26,10 +26,16 @@ export default function Contact() {
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) throw new Error("Failed");
+      const result = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        throw new Error(result?.error || "Failed to send email.");
+      }
+
       setStatus("sent");
       form.reset();
-    } catch {
+    } catch (error: any) {
+      console.error("Contact form submit error:", error);
       setStatus("error");
     }
   };
@@ -115,7 +121,7 @@ function Field({ id, label, type }: { id: string; label: string; type: "text" | 
 
 function SocialIcon({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   return (
-    
+    <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
