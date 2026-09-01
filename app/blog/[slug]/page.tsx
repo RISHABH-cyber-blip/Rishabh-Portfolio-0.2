@@ -14,8 +14,8 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
   const paragraphs = post.content.split("\n\n");
 
   return (
-    <main className="relative z-10 min-h-screen px-8 pb-32 pt-40">
-      <article className="mx-auto max-w-[720px]">
+    <main className="relative z-10 min-h-screen px-4 pb-32 pt-40 sm:px-6 md:px-8">
+      <article className="mx-auto max-w-[680px]">
         <Link href="/blog" className="cursor-hover mb-10 inline-flex items-center gap-2 text-sm text-muted hover:text-accent">
           <ArrowLeft size={16} /> Back to blog
         </Link>
@@ -25,14 +25,14 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
         <span className="mb-4 inline-block rounded-full border border-border px-3 py-1 text-[11px] font-medium text-primary">
           {post.tag}
         </span>
-        <h1 className="font-display mb-3 text-4xl font-extrabold leading-tight md:text-5xl">
+        <h1 className="font-display mb-3 text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
           {post.title}
         </h1>
         <span className="font-mono text-xs text-faint">{post.readingTime}</span>
 
-        <div className="mt-10 flex flex-col gap-6">
+        <div className="mt-10 flex flex-col gap-5">
           {paragraphs.map((p, i) => (
-            <p key={i} className="text-[17px] leading-[1.8] text-muted">
+            <p key={i} className="text-[16px] leading-[1.9] text-muted sm:text-[17px]">
               {p}
             </p>
           ))}
