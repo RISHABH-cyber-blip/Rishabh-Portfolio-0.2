@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import profileImage from "./Rishabh.jpeg";
 
 const NAME = "Rishabh";
 
@@ -99,16 +100,13 @@ export default function Hero() {
               background: "linear-gradient(160deg, rgba(0,229,255,0.1), rgba(124,92,255,0.1))",
             }}
           >
-            {/* Replace with your real photo: */}
-            {/* <Image src="/your-photo.jpg" alt="Rishabh" fill className="object-cover" /> */}
-            <div className="flex h-full flex-col items-center justify-center gap-3 text-faint">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.2} className="h-14 w-14 opacity-50">
-                <rect x="3" y="3" width="18" height="18" rx="3" />
-                <circle cx="9" cy="9" r="2" />
-                <path d="M21 15l-5-5L5 21" />
-              </svg>
-              <span className="font-mono text-[11px] tracking-widest">YOUR PHOTO HERE</span>
-            </div>
+            <Image
+              src={profileImage}
+              alt="Rishabh"
+              fill
+              priority
+              className="object-cover"
+            />
           </div>
         </motion.div>
       </div>
