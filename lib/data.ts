@@ -39,7 +39,7 @@ export const projects: Project[] = [
     description: "Aurele — a full-stack luxury watch e-commerce demo with real auth and payments, styled in an editorial dark theme with a drag-to-rotate hero.",
     image: "/projects/placeholder-1.jpg",
     github: "https://github.com/RISHABH-cyber-blip/AURELE",
-    live: "aurele-nine.vercel.app",
+    live: "https://aurele-nine.vercel.app/",
   },
   {
     slug: "project-two",
@@ -47,7 +47,7 @@ export const projects: Project[] = [
     description: "MH Legal — a lawyer-firm site with advocate profiles, animated stats, and a video-based legal-insights blog.",
     image: "/projects/placeholder-2.jpg",
     github: "https://github.com/RISHABH-cyber-blip/govind_law",
-    live: "govind-law.vercel.app",
+    live: "https://govind-law.vercel.app/",
   },
   {
     slug: "project-three",

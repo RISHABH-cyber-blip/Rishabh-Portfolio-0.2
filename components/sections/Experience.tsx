@@ -20,28 +20,34 @@ export default function Experience() {
           </h2>
         </motion.div>
 
-        <div className="relative mx-auto max-w-[820px] before:absolute before:left-3.5 before:top-0 before:bottom-0 before:w-px before:bg-gradient-to-b before:from-accent/50 before:via-primary/50 before:to-transparent md:before:left-1/2">
-          {experience.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              className="relative mb-8 grid grid-cols-[30px_1fr] items-start gap-0 md:grid-cols-[1fr_40px_1fr]"
-            >
-              <span className="relative top-1.5 h-3 w-3 justify-self-start rounded-full bg-accent shadow-[0_0_12px_#00E5FF] md:col-start-2 md:justify-self-center" />
+        <div className="relative mx-auto max-w-[900px]">
+          <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-accent/50 via-primary/50 to-transparent md:block" />
 
-              <div
-                className={`glass p-6 md:col-start-3 ${i % 2 === 1 ? "md:col-start-1 md:row-start-1 md:text-right" : ""}`}
+          {experience.map((item, i) => {
+            const isLeft = i % 2 === 0;
+
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.7, delay: i * 0.1 }}
+                className="relative mb-8 flex flex-col gap-3 md:mb-10 md:block"
               >
-                <h3 className="font-display text-lg font-bold">{item.role}</h3>
-                <span className="mb-0.5 block text-sm text-primary">{item.org}</span>
-                <span className="mb-3 block font-mono text-xs text-faint">{item.dates}</span>
-                <p className="text-sm leading-relaxed text-muted">{item.description}</p>
-              </div>
-            </motion.div>
-          ))}
+                <span className="relative left-1 top-1.5 h-3 w-3 rounded-full bg-accent shadow-[0_0_12px_#00E5FF] md:absolute md:left-1/2 md:top-7 md:-translate-x-1/2" />
+
+                <div className={isLeft ? "md:w-1/2 md:pr-12" : "md:ml-auto md:w-1/2 md:pl-12"}>
+                  <div className={`glass p-6 ${isLeft ? "md:mr-2" : "md:ml-2"}`}>
+                    <h3 className="font-display text-lg font-bold">{item.role}</h3>
+                    <span className="mb-0.5 block text-sm text-primary">{item.org}</span>
+                    <span className="mb-3 block font-mono text-xs text-faint">{item.dates}</span>
+                    <p className="text-sm leading-relaxed text-muted">{item.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

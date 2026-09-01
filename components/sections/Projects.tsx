@@ -47,12 +47,16 @@ function ProjectCard({ project }: { project: Project }) {
           <div className="mt-auto flex gap-2.5">
             <a
               href={project.github}
+              target="_blank"
+              rel="noreferrer"
               className="cursor-hover flex flex-1 items-center justify-center gap-1.5 rounded-full border border-border py-2.5 text-xs font-semibold transition-colors hover:border-accent/50"
             >
               <Github size={14} /> GitHub
             </a>
             <a
               href={project.live}
+              target="_blank"
+              rel="noreferrer"
               className="cursor-hover flex flex-1 items-center justify-center gap-1.5 rounded-full bg-accent py-2.5 text-xs font-semibold text-[#051014]"
             >
               Live Demo <ArrowUpRight size={14} />
