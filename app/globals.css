@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 html {
   scroll-behavior: smooth;
@@ -26,6 +24,7 @@ body {
 .glass {
   background: rgba(255, 255, 255, 0.045);
   border: 1px solid rgba(255, 255, 255, 0.09);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border-radius: 22px;
 }
