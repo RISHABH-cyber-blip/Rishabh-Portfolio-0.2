@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return null;
+  }
+  return new Resend(apiKey);
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,6 +33,15 @@ export async function POST(request: NextRequest) {
       console.error("Missing RESEND_FROM_EMAIL environment variable");
       return NextResponse.json(
         { success: false, error: "Sender email is not configured." },
+        { status: 500 }
+      );
+    }
+
+    const resend = getResendClient();
+    if (!resend) {
+      console.error("Missing RESEND_API_KEY environment variable");
+      return NextResponse.json(
+        { success: false, error: "Email service is not configured on the server." },
         { status: 500 }
       );
     }
