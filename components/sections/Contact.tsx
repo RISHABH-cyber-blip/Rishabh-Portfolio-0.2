@@ -7,10 +7,12 @@ import { socials } from "@/lib/data";
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [serverError, setServerError] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
+    setServerError("");
 
     const form = e.currentTarget;
     const data = {
@@ -29,14 +31,18 @@ export default function Contact() {
       const result = await res.json().catch(() => null);
 
       if (!res.ok) {
-        throw new Error(result?.error || "Failed to send email.");
+        const errorMessage = result?.error || "Failed to send email.";
+        setServerError(errorMessage);
+        throw new Error(errorMessage);
       }
 
       setStatus("sent");
+      setServerError("");
       form.reset();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Contact form submit error:", error);
       setStatus("error");
+      setServerError((error as Error)?.message || "Something went wrong. Try again or email me directly.");
     }
   };
 
@@ -78,7 +84,7 @@ export default function Contact() {
               <p className="text-center text-sm text-accent">Message sent — I&apos;ll get back to you soon!</p>
             )}
             {status === "error" && (
-              <p className="text-center text-sm text-red-400">Something went wrong. Try again or email me directly.</p>
+              <p className="text-center text-sm text-red-400">{serverError || "Something went wrong. Try again or email me directly."}</p>
             )}
           </form>
         </motion.div>
