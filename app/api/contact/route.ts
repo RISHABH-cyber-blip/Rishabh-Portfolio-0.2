@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-function getResendClient() {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return null;
-  }
-  return new Resend(apiKey);
-}
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -37,14 +29,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const resend = getResendClient();
-    if (!resend) {
-      console.error("Missing RESEND_API_KEY environment variable");
-      return NextResponse.json(
-        { success: false, error: "Email service is not configured on the server." },
-        { status: 500 }
-      );
-    }
+    // Created here, not at module scope, so a missing key never crashes the build —
+    // only a real request without a key returns the 500 above.
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL,
