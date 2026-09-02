@@ -1,6 +1,3 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Projects from "@/components/sections/Projects";
@@ -9,17 +6,10 @@ import Experience from "@/components/sections/Experience";
 import BlogCTA from "@/components/sections/BlogCTA";
 import Contact from "@/components/sections/Contact";
 
-// Canvas/WebGL only exists in the browser — prerendering this on the server
-// (Next.js's default for static pages) crashes the build. ssr:false skips
-// server rendering for this component and mounts it client-side only.
-const Background3D = dynamic(() => import("@/components/Background3D"), {
-  ssr: false,
-});
-
 export default function Home() {
   return (
     <main className="relative z-10">
-      <Background3D />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_top,_rgba(98,188,255,0.18),_transparent_38%),radial-gradient(circle_at_bottom,_rgba(153,102,255,0.14),_transparent_42%)]" />
       <Hero />
       <About />
       <Projects />
